@@ -9,7 +9,6 @@ import email.header
 
 DIRECTORY = 'msg'
 ATTACHMENT_DIR= 'attach'
-# DIRECTORY = 'msg_test'
 OUTPUT_FILE = 'test_result.csv'
 ERROR_LOG = 'error_log.csv'
 
@@ -26,11 +25,6 @@ def export_to_csv(result, output_file):
 
 
 def get_attachment_file(file):
-    ''' Return the list of mail attachment filename and sha1
-
-        >>> get_attachment_file(file)
-        (('aaa.exe', 'bbb.exe'), ('qazwsxedcrqazwsxedcrqazwsxedcrqazwsxedcr', 'rfvtgbyhnurfvtgbyhnurfvtgbyhnurfvtgbyhnu'))
-    '''
     email_filename_list = []
     filename_list = []
     sha1_list = []
@@ -43,15 +37,11 @@ def get_attachment_file(file):
         try:
             fnam = attachment.get_filename()
             f = open(ATTACHMENT_DIR + '/' + fnam, 'wb').write(attachment.get_payload(decode=True,))
-#             print (fnam)
             filename_list.append(fnam)
-            # sha1 = hashlib.sha1(f).hexdigest()
-            # sha1_list.append(sha1)
             f.close()
         except Exception as detail:
             pass
 
-    # return (email_filename_list, filename_list, sha1_list)
     return (email_filename_list, filename_list)
 
 
@@ -68,6 +58,3 @@ if __name__ == '__main__':
             except:
                 error_list.append(file)
                 export_to_csv(error_list, ERROR_LOG)
-
-#     with open('error_list.csv', 'a') as f:
-#        f.write(error_list)
